@@ -14,7 +14,7 @@ internal class Shox
         }
 
         if (args.Length == 1)
-            Run(args[0]);
+            RunFile(args[0]);
 
         else
             RunAsRepl();
@@ -23,17 +23,19 @@ internal class Shox
     // Runs file if present
     private static void RunFile(string path)
     {
+        Console.WriteLine(Environment.CurrentDirectory);
         if (Path.Exists(path))
         {
-            var contents = File.ReadAllBytes(path);
-
-            var code = contents.ToString();
-
-            if (code is null) return;
+            var code = File.ReadAllText(path);
 
             Run(code);
 
             if (_hadError) Environment.Exit(1);
+        }
+        else
+        {
+            Console.Error.WriteLine("Path: " + path +
+                                    " not able to be resolved.");
         }
     }
 
@@ -51,6 +53,9 @@ internal class Shox
 
     private static void Run(string contents)
     {
+        var lexer = new Lexer(contents);
+        var tokens = lexer.ScanTokens();
+        foreach (var token in tokens) Console.WriteLine(token);
     }
 
 

@@ -39,5 +39,6 @@ public enum TokenType
     Super,
     This,
     Var,
-    While
+    While,
+    Eof
 }
