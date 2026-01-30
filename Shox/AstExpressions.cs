@@ -29,7 +29,7 @@ public record Grouping(Expr Expression) : Expr
     }
 }
 
-public record Literal(object Value) : Expr
+public record Literal(object? Value) : Expr
 {
     public override T Accept<T>(IVisitor<T> visitor)
     {
