@@ -30,8 +30,8 @@ public static class GenerateAstExpressions
 
         //generate visitor interfaces
         foreach (var tup in data)
-            writeText.AppendLine("T " + "Visit" + tup.Item1 + "Expr(" +
-                                 tup.Item1 + " expr);");
+            writeText.Append("T Visit").Append(tup.Item1).Append("Expr(")
+                .Append(tup.Item1).AppendLine(" expr);");
 
         writeText.AppendLine("}");
 
@@ -39,10 +39,11 @@ public static class GenerateAstExpressions
         foreach (var tup in data)
         {
             //record class gen
-            writeText.Append("public record " + tup.Item1 + "(");
+            writeText.Append("public record ").Append(tup.Item1).Append('(');
 
             foreach (var (name, type) in tup.Item2)
-                writeText.Append(type + " " + name + ", ");
+                writeText.Append(type).Append(' ').Append(name).Append(", ");
+
             writeText.Remove(writeText.Length - 2, 2);
 
             writeText.AppendLine("): Expr");
@@ -52,8 +53,9 @@ public static class GenerateAstExpressions
 
             writeText.AppendLine(
                 "public override T Accept<T>(IVisitor<T> visitor) {");
-            writeText.AppendLine("return visitor.Visit" + tup.Item1 +
-                                 "Expr(this);");
+
+            writeText.Append("return visitor.Visit").Append(tup.Item1)
+                .AppendLine("Expr(this);");
             writeText.AppendLine("}");
             writeText.AppendLine("}");
 
